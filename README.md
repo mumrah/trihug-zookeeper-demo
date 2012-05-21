@@ -28,5 +28,6 @@ Run this demo with Ant:
 Then in another terminal, connect to the ZooKeeper server and create "/demo"
 with some data:
 
+    ./zk.sh -server localhost:2181
     create /demo DEMO!
 

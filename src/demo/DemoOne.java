@@ -26,8 +26,11 @@ public class DemoOne implements Watcher {
   }
 
   public static void main(String[] args) throws Exception {
+    int port = Integer.parseInt(args[0]);
+    String zkConnect = "localhost:" + port;
+
     DemoOne demo = new DemoOne();
-    ZooKeeper zk = new ZooKeeper("localhost:2181", 10000, demo);
+    ZooKeeper zk = new ZooKeeper(zkConnect, 10000, demo);
     Stat demoPath= zk.exists("/demo", demo);
     if(demoPath != null) {
       System.err.println("Demo exists, deleting it first");

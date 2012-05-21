@@ -2,6 +2,7 @@
     <description>Demo for TriHUG ZooKeeper meetup</description>
     <property name="src" location="src"/>
     <property name="build" location="build"/>
+    <property name="zk.port" value="2181"/>
 
     <path id="compile-libraries">
         <fileset dir="lib" includes="*.jar"/>
@@ -14,8 +15,20 @@
         </javac>
     </target>
 
+    <target name="zk" description="run zookeeper">
+        <!-- If this fails, make sure 2181 is free and that /tmp/trihug-zookeeper-demo
+            can be created. You can also change the port by overwriting zk.port -->
+        <java classname="org.apache.zookeeper.server.ZooKeeperServerMain" 
+                dir="${basedir}" fork="true" failonerror="true">
+            <classpath refid="compile-libraries"/>
+            <arg value="${zk.port}"/>
+            <arg value="/tmp/trihug-zookeeper-demo"/>
+        </java>
+    </target>
+
     <target name="demo-1" depends="compile" description="run demo 1, setting a watch">
         <java classname="demo.DemoOne" dir="${basedir}">
+            <arg value="${zk.port}"/>
             <classpath>
                 <path refid="compile-libraries"/>
                 <pathelement path="${build}"/>
