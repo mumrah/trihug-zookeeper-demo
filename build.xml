@@ -69,6 +69,16 @@
         </java>
     </target>
 
+    <target name="demo-curator-group" depends="compile" description="run Curator group membership demo">
+        <java classname="demo.CuratorGroupMembershipDemo" dir="${basedir}">
+            <arg value="${zk.port}"/>
+            <classpath>
+                <path refid="compile-libraries"/>
+                <pathelement path="${build}"/>
+            </classpath>
+        </java>
+    </target>
+
     <target name="clean" description="clean up build directory">
         <delete dir="${build}"/>
     </target>
