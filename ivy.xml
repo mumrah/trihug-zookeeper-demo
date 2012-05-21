@@ -1,0 +1,16 @@
+<ivy-module version="2.0">
+    <info organisation="demo" module="trihug-zookeeper-demo"/>
+    <configurations defaultconfmapping="default->default">
+      <conf name="default"/>
+    </configurations>
+    <dependencies>
+        <dependency org="org.apache.zookeeper" name="zookeeper" rev="3.4.3">
+           <exclude org="javax.jms"/>
+           <exclude org="javax.mail"/>
+           <exclude org="com.sun.jdmk"/>
+           <exclude org="com.sun.jmx"/>
+        </dependency>
+        <dependency org="com.netflix.curator" name="curator-framework" rev="1.1.10"/>
+        <dependency org="com.netflix.curator" name="curator-recipes" rev="1.1.10"/>
+    </dependencies>
+</ivy-module>

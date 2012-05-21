@@ -1,8 +1,10 @@
-<project name="trihug-zookeeper-demo" default="compile" basedir=".">
+<project name="trihug-zookeeper-demo" default="compile" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
     <description>Demo for TriHUG ZooKeeper meetup</description>
     <property name="src" location="src"/>
+    <property name="lib" location="lib"/>
     <property name="build" location="build"/>
     <property name="zk.port" value="2181"/>
+    <property name="zk.dir" value="/tmp/trihug-zookeeper-demo"/>
 
     <path id="compile-libraries">
         <fileset dir="lib" includes="*.jar"/>
@@ -17,13 +19,13 @@
 
     <target name="zk" description="run zookeeper">
         <!-- If this fails, make sure 2181 is free and that /tmp/trihug-zookeeper-demo
-            can be created. You can also change the port by overwriting zk.port -->
+            can be created. You can also change the port by overwriting zk.port and zk.dir -->
         <java classname="org.apache.zookeeper.server.ZooKeeperServerMain" 
                 dir="${basedir}" fork="true" failonerror="true">
             <classpath refid="compile-libraries"/>
             <jvmarg value="-Xmx512m"/>
             <arg value="${zk.port}"/>
-            <arg value="/tmp/trihug-zookeeper-demo"/>
+            <arg value="${zk.dir}"/>
         </java>
     </target>
 
@@ -67,7 +69,15 @@
         </java>
     </target>
 
-    <target name="clean" description="clean up">
+    <target name="clean" description="clean up build directory">
         <delete dir="${build}"/>
+    </target>
+
+    <target name="clean-zk" description="clean up ZooKeeper directory">
+        <delete dir="${zk.dir}"/>
+    </target>
+
+    <target name="ivy" description="retrieve dependencies with ivy" unless="skip.ivy">
+        <ivy:retrieve type="jar,bundle" log="download-only" pattern="${lib}/[artifact]-[revision].[ext]" />
     </target>
 </project>
