@@ -46,7 +46,7 @@ used again.
 
 ## Demo Three, creating an ephemeral znode
 
-Ephemermal znodes will be automatically deleted by the ZooKeeper server when the
+Ephemeral znodes will be automatically deleted by the ZooKeeper server when the
 client that created those nodes disconnects. 
 
 Connect to ZooKeeper server and list the children of "/demo" (if "/demo" doesn't
@@ -64,7 +64,7 @@ Back in the ZooKeeper shell, list the children of "/demo" again
     ls /demo
 
 You should see "ephemeral" along with any other children that might exist. After 
-a few seconds, list the children again and "ephermal" should be gone.
+a few seconds, list the children again and "ephemeral" should be gone.
 
 N.B., ephemeral and sequential are not mutually exclusive. Znodes are 
 (ephemeral or persistent) and (sequential or regular).
