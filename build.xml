@@ -21,6 +21,7 @@
         <java classname="org.apache.zookeeper.server.ZooKeeperServerMain" 
                 dir="${basedir}" fork="true" failonerror="true">
             <classpath refid="compile-libraries"/>
+            <jvmarg value="-Xmx512m"/>
             <arg value="${zk.port}"/>
             <arg value="/tmp/trihug-zookeeper-demo"/>
         </java>
@@ -28,6 +29,36 @@
 
     <target name="demo-1" depends="compile" description="run demo 1, setting a watch">
         <java classname="demo.DemoOne" dir="${basedir}">
+            <arg value="${zk.port}"/>
+            <classpath>
+                <path refid="compile-libraries"/>
+                <pathelement path="${build}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="demo-2" depends="compile" description="run demo 2, sequential nodes">
+        <java classname="demo.DemoTwo" dir="${basedir}">
+            <arg value="${zk.port}"/>
+            <classpath>
+                <path refid="compile-libraries"/>
+                <pathelement path="${build}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="demo-3" depends="compile" description="run demo 3, ephemeral node">
+        <java classname="demo.DemoThree" dir="${basedir}">
+            <arg value="${zk.port}"/>
+            <classpath>
+                <path refid="compile-libraries"/>
+                <pathelement path="${build}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="demo-group" depends="compile" description="run group membership demo">
+        <java classname="demo.GroupMembershipDemo" dir="${basedir}">
             <arg value="${zk.port}"/>
             <classpath>
                 <path refid="compile-libraries"/>
