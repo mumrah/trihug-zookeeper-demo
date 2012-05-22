@@ -3,15 +3,14 @@ package demo;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.data.Stat;
 
 /*
  * Znode watcher demo
  */
 public class WatcherDemo implements Watcher {
 
-  private volatile boolean _sawDemo = false;
   private static final String NODE = "/demo";
+  private volatile boolean _sawDemo = false;
 
   public boolean sawDemo() {
     return _sawDemo;
@@ -19,8 +18,6 @@ public class WatcherDemo implements Watcher {
 
   @Override
   public void process(WatchedEvent event) {
-    System.err.println("Event: " + event);
-
     // Look for a NodeCreate event on /demo
     if(event.getType() == Watcher.Event.EventType.NodeCreated) {
       if(event.getPath().equals(NODE)) {
@@ -35,12 +32,15 @@ public class WatcherDemo implements Watcher {
 
     WatcherDemo demo = new WatcherDemo();
     ZooKeeper zk = new ZooKeeper(zkConnect, 10000, demo);
-    Stat demoPath= zk.exists(NODE, true);
-    if(demoPath != null) {
+
+    // If /demo exists, delete it first
+    if(zk.exists(NODE, true) != null) {
       System.err.println("Demo exists, deleting it first");
       zk.delete(NODE, -1);
       zk.exists(NODE, true); // Reset the watch
     }
+
+    // Poll until the watcher gets called
     while(true) {
       if(demo.sawDemo()) {
         System.err.print("Demo was created!");
