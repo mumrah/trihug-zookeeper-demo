@@ -9,7 +9,7 @@ import org.apache.zookeeper.ZooKeeper;
 /*
  * Sequential znode demo
  */
-public class DemoTwo implements Watcher {
+public class SequentialDemo implements Watcher {
 
   @Override
   public void process(WatchedEvent event) {
@@ -20,7 +20,7 @@ public class DemoTwo implements Watcher {
     int port = Integer.parseInt(args[0]);
     String zkConnect = "localhost:" + port;
     System.err.println("Connecting to: " + zkConnect);
-    DemoTwo demo = new DemoTwo();
+    SequentialDemo demo = new SequentialDemo();
     ZooKeeper zk = new ZooKeeper(zkConnect, 10000, demo);
     for(int i=0; i<4; i++) {
       zk.create("/demo/seq-", new byte[0], Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);

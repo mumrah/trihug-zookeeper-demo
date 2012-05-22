@@ -8,7 +8,7 @@ import org.apache.zookeeper.data.Stat;
 /*
  * Znode watcher demo
  */
-public class DemoOne implements Watcher {
+public class WatcherDemo implements Watcher {
 
   private volatile boolean _sawDemo = false;
   private static final String NODE = "/demo";
@@ -33,7 +33,7 @@ public class DemoOne implements Watcher {
     int port = Integer.parseInt(args[0]);
     String zkConnect = "localhost:" + port;
 
-    DemoOne demo = new DemoOne();
+    WatcherDemo demo = new WatcherDemo();
     ZooKeeper zk = new ZooKeeper(zkConnect, 10000, demo);
     Stat demoPath= zk.exists(NODE, true);
     if(demoPath != null) {
@@ -43,11 +43,12 @@ public class DemoOne implements Watcher {
     }
     while(true) {
       if(demo.sawDemo()) {
-        System.err.println("Demo was created!");
+        System.err.print("Demo was created!");
         break;
       }
       Thread.sleep(100);
     }
+    System.err.println(" With data: " + new String(zk.getData(NODE, false, null)));
     zk.close();
   }
 }   

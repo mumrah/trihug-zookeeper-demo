@@ -9,7 +9,7 @@ import org.apache.zookeeper.ZooKeeper;
 /*
  * Ephemeral znode demo
  */
-public class DemoThree implements Watcher {
+public class EphemeralDemo implements Watcher {
 
   @Override
   public void process(WatchedEvent event) {
@@ -20,11 +20,11 @@ public class DemoThree implements Watcher {
     int port = Integer.parseInt(args[0]);
     String zkConnect = "localhost:" + port;
     System.err.println("Connecting to: " + zkConnect);
-    DemoThree demo = new DemoThree();
+    EphemeralDemo demo = new EphemeralDemo();
     ZooKeeper zk = new ZooKeeper(zkConnect, 10000, demo);
-    zk.create("/demo/ephemeral", new byte[0], Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-    System.err.println("Created /demo/ephemeral. Sleeping for 5 seconds");
-    Thread.sleep(5000);
+    zk.create("/demo/ephemeral", "I am an ephemeral node".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+    System.err.println("Created /demo/ephemeral. Sleeping for 10 seconds");
+    Thread.sleep(10000);
     zk.close();
   }
 }

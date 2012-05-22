@@ -2,6 +2,18 @@
 
 ZooKeeper demo code for TriHUG May 22, 2012
 
+Build the demos with ant:
+
+    ant clean compile
+
+Included is a ant target that will run the ZooKeeper server:
+
+    ant zk -Dzk.port=2181 -Dzk.dir=/tmp/zk
+
+The ZooKeeper directory can be cleaned up with
+
+    ant clean-zk
+
 ## Demo One, setting a watch
 
 This example demonstrates the watch mechanism in `ZooKeeper`. All of the basic
@@ -23,7 +35,7 @@ event.
 
 Run this demo with Ant:
 
-    ant clean demo-1
+    ant watcher-demo
 
 Then in another terminal, connect to the ZooKeeper server and create "/demo"
 with some data:
@@ -31,13 +43,15 @@ with some data:
     ./zk.sh -server localhost:2181
     create /demo DEMO!
 
+In the Ant window you should see a message about "/demo" being created.
+
 ## Demo Two, creating a sequential znode
 
 Sequential znodes will automatically append a ten digit zero padded number.
 E.g., if you create "foo-" in sequential mode you get "foo-0000000000". If you
 create "foo-" again, you get "foo-0000000001". Run the demo like:
 
-    ant clean demo-2
+    ant seq-demo
 
 Run it again and see that the incrementor remember where it left off. This is
 because the server maintains the incrementor forever. This establishes a
@@ -57,7 +71,7 @@ exist, create it).
 
 Run the demo - this creates an ephemeral znode then sleeps for 5 seconds
 
-    ant clean demo-3
+    ant ephem-demo
 
 Back in the ZooKeeper shell, list the children of "/demo" again
 
@@ -68,3 +82,22 @@ a few seconds, list the children again and "ephemeral" should be gone.
 
 N.B., ephemeral and sequential are not mutually exclusive. Znodes are 
 (ephemeral or persistent) and (sequential or regular).
+
+## Demo Four, group membership
+
+This demo utilizes sequential ephemeral nodes to register agents as members of a
+group. The group is represented by the znode "/demo/group". When an agent comes
+online, it creates an ephemeral sequential node at "/demo/group/member-". Each
+agent also sets a watch on getChildren of "/demo/group". This allows every agent
+to know about every other agent in real time without polling.
+
+The demo will startup, register itself, sleep for 10 seconds, then terminate.
+
+Run the demo
+
+    ant group-demo
+
+In another terminal
+
+    ant group-demo
+

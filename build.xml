@@ -29,8 +29,8 @@
         </java>
     </target>
 
-    <target name="demo-1" depends="compile" description="run demo 1, setting a watch">
-        <java classname="demo.DemoOne" dir="${basedir}">
+    <target name="watcher-demo" depends="compile" description="run watcher demo">
+        <java classname="demo.WatcherDemo" dir="${basedir}">
             <arg value="${zk.port}"/>
             <classpath>
                 <path refid="compile-libraries"/>
@@ -39,8 +39,8 @@
         </java>
     </target>
 
-    <target name="demo-2" depends="compile" description="run demo 2, sequential nodes">
-        <java classname="demo.DemoTwo" dir="${basedir}">
+    <target name="seq-demo" depends="compile" description="run sequential znode demo">
+        <java classname="demo.SequentialDemo" dir="${basedir}" fork="true">
             <arg value="${zk.port}"/>
             <classpath>
                 <path refid="compile-libraries"/>
@@ -49,8 +49,8 @@
         </java>
     </target>
 
-    <target name="demo-3" depends="compile" description="run demo 3, ephemeral node">
-        <java classname="demo.DemoThree" dir="${basedir}">
+    <target name="ephem-demo" depends="compile" description="run ephemeral znode demo">
+        <java classname="demo.EphemeralDemo" dir="${basedir}" fork="true">
             <arg value="${zk.port}"/>
             <classpath>
                 <path refid="compile-libraries"/>
@@ -59,8 +59,8 @@
         </java>
     </target>
 
-    <target name="demo-group" depends="compile" description="run group membership demo">
-        <java classname="demo.GroupMembershipDemo" dir="${basedir}">
+    <target name="group-demo" depends="compile" description="run group membership demo">
+        <java classname="demo.GroupMembershipDemo" dir="${basedir}" fork="true">
             <arg value="${zk.port}"/>
             <classpath>
                 <path refid="compile-libraries"/>
@@ -69,8 +69,8 @@
         </java>
     </target>
 
-    <target name="demo-curator-group" depends="compile" description="run Curator group membership demo">
-        <java classname="demo.CuratorGroupMembershipDemo" dir="${basedir}">
+    <target name="curator-group-demo" depends="compile" description="run Curator group membership demo">
+        <java classname="demo.CuratorGroupMembershipDemo" dir="${basedir}" fork="true">
             <arg value="${zk.port}"/>
             <classpath>
                 <path refid="compile-libraries"/>
